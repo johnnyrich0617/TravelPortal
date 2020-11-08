@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title th:text=#{registration.application.title}>Registration</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/styles.css" media="all" th:href="@{/css/styles.css}"/>
+	</head>
+	<body>
+		<nav class="navbar navbar-light bg-light">
+			<a class="navbar-brand" href="#">
+			<img src="../../images/snhuTravel.png" width="30" height="30" class="d-inline-block align-top" alt="" th:src="@{/images/snhuTravel.png}"/>
+				SNHU Travel Portal
+			</a>
+		</nav>
+		<div class=registration-form>
+			<div class=container-fluid style="background-color:aliceblue; width: 1200px">
+				<h4 th:text=#{registration.page.msg}><b>Create New User</b></h4>
+				<div class="card w-40">
+					<div class=row>
+						<div class=col>
+							<label>
+								<b>
+								<span th:text=#{registration.customerid}>Customer Number:</span>
+								(<span th:text=${newUser.customerInfo.customerId}>xxxxx-xxxxx</span>)
+								</b>
+							</label>
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class=container style="background-color:lightGoldenRodYellow; width: 800px">
+					<form action="#" th:action="@{/createuser}" th:object="${newUser}" method="post">
+						 <fieldset>
+						 	<h4 th:text="#{registration.form.legend}">User Credentials</h4>
+						 	<br>
+						 	<div>
+			        			<div class=errors th:if="${#fields.hasAnyErrors()}">
+			        				<p th:each="err : ${#fields.allErrors()}" th:text="${err}">...</p>
+								</div>
+		        			</div>
+		        			<div class=row>
+								<div class=col>
+						            <label for="userId">
+						              <span th:text="#{registration.uid.lable}">User Name</span>
+						            </label>
+						            <input type="text" th:field="*{userId}"/>
+						         </div>
+						         <div class=col>
+			            			<label for="password">
+			              				<span th:text="#{registration.password.lable}">Password</span>
+			            			</label>
+			            			<input type="text" th:field="*{password}"/>
+			          			</div>
+			          			<div class=col>
+			            			<label for="displayname">
+			              				<span th:text="#{registration.displayname.lable}">Display Name</span>
+			            			</label>
+			            			<input type="text" th:field="*{displayName}"/>
+			          			</div>
+			          		</div>
+			          		<hr>
+			          		<div><br></div>
+			          		<h4 th:text=#{registration.customer.section.lable}>Customer Information</h4>
+			          		<br>
+			          		<div class=row>
+			          			<div class=col>
+						            <label for="customerLastName">
+						              <span th:text="#{registration.customer.lastname.lable}">Last Name</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.customerLastName}"/>
+						         </div>
+						         <div class=col>
+						            <label for="customerFirstName">
+						              <span th:text="#{registration.customer.firstname.lable}">First Name</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.customerFirstName}"/>
+						         </div>
+						         <div class=col>
+						            <label for="customerMiddleInit">
+						              <span th:text="#{registration.customer.mi.lable}">Middle Initial</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.customerMiddleInit}"/>
+						         </div>
+			          		</div>
+			          		<hr>
+			          		<div><br></div>
+			          		<div class=row>
+				          		<div class=col-sm-4>
+				          			<label for="customerAddress1">
+						              <span th:text="#{registration.customer.address1.lable}">Address1</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.address1}"/>
+				          		</div>
+				          		<div class=col-sm-4>
+				          			 <label for="customerAddress2">
+						              <span th:text="#{registration.customer.address2.lable}">Address2</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.address2}"/>
+				          		</div>
+				          		<div class=col-sm-4></div>
+			          		</div>
+			          		<div><br></div>
+			          		<div class=row>
+				          		<div class=col-sm-4>
+				          			<label for="customercity">
+						              <span th:text="#{registration.customer.city.lable}">City</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.city}"/>
+				          		</div>
+				          		<div class=col-sm-4>
+				          			 <label for="customerstate">
+						              <span th:text="#{registration.customer.state.lable}">State</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.state}"/>
+				          		</div>
+				          		<div class=col-sm-4>
+				          			<label for="customerzipcode">
+						              <span th:text="#{registration.customer.fivedigitzipcode.lable}">Five Digit ZipCode</span>
+						            </label>
+						           <input type="text" th:field="*{customerInfo.fiveDigitZipCode}"/>
+					          </div>
+			          		</div>
+			          		<hr>
+			          		<div><br></div>
+			          		<h4 th:text=#{registration.customer.contact.section.lable}>Contact Information</h4>
+			          		<div><br></div>
+			          		<div class=row>
+				          		<div class=col-sm-4>
+				          			<label for="customerphone">
+						              <span th:text="#{registration.customer.phone.lable}">Phone</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.phone}"/>
+				          		</div>
+				          		<div class=col-sm-2>
+				          			<select th:field="*{customerInfo.phoneType}">
+										<option th:each="type : ${allPhoneTypes}" 
+												th:value="${type}" 
+												th:text="#{${'registration.customerinfo.phonetype.' + type}}">Cell</option>
+									</select>
+				          		</div>
+				          		<div class=col-sm-6></div>
+			          		</div>
+			          		<div class=row>
+			          			<div class=col-sm-12>
+			          				<label for="customeremail">
+						              <span th:text="#{registration.customerinfo.email}">Email</span>
+						            </label>
+						            <input type="text" th:field="*{customerInfo.email}"/>          			
+			          			</div>
+			          			
+			          		</div>
+			          		<hr>
+		          			<div><br></div>
+		          			<div class="submit">
+		            			<button class=form-submit-button type="submit" name="save" th:text="#{registration.button.submit.lable}">Save New User</button>    
+		          			</div>
+		          			<div>
+			          			<br>
+			          			<br>
+			          			<br>
+		          			</div>
+						</fieldset>
+					</form>
+			 	</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	</body>
+</html>
